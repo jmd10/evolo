@@ -1,0 +1,32 @@
+{% extends "evolo/base.html" %}
+{% block title %}{{ block.super }}- Dashboard{% endblock %}
+{% block content %}
+    <h3 style="text-align: center" class="">Welcome to Home Page <span
+            style="color: blue">{{ request.user|capfirst }}</span></h3>
+
+    <table class="table">
+        <thead>
+        <tr>
+            <th scope="col">#</th>
+            <th scope="col">Tracking Variable</th>
+            <th scope="col">Variable Type</th>
+            <th scope="col">Edit</th>
+        </tr>
+        </thead>
+        <tbody>
+        {% for object in object_list %}
+            <tr>
+                <th scope="row">{{ forloop.counter }}</th>
+                <td>{{ object.variable_name }}</td>
+                <td>{{ object.get_variable_type_display }}</td>
+                <td><a class="nav-link" href="{% url 'evolo:var_update' object.id %}">Edit</a></td>
+            </tr>
+        {% empty %}
+            <h3 class="text-danger">Tracking variables not created</h3>
+        {% endfor %}
+        </tbody>
+    </table>
+
+
+
+{% endblock %}

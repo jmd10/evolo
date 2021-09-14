@@ -1,0 +1,67 @@
+{% extends "evolo/base.html" %}
+{% block title %}{{ block.super }}- Add Results{% endblock %}
+{% block content %}
+
+
+    <!-- Button trigger modal -->
+    <div class="row">
+        <div class="col-10"></div>
+        <div class="col">
+            <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#dateModal">
+                Add / Modify Results
+            </button>
+        </div>
+    </div>
+    <!-- Modal -->
+    <div class="modal fade" id="dateModal" tabindex="-1">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="dateModalTitle">Select Date</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <form action="{% url 'evolo:add_results_view' %}" method="get">
+                    {% csrf_token %}
+                    <div class="modal-body">
+                        <input type="date" id="tracker_date" name="results_date" required="required">
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                        <button type="submit" class="btn btn-primary" id="btn_save">Add Results</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+
+    </div>
+
+
+
+    <div class="row mb-5">
+        <div class="col"><span class="badge bg-primary">Variable Name</span></div>
+        <div class="col"><span class="badge bg-primary">Type</span></div>
+        <div class="col"><span class="badge bg-primary">Value</span></div>
+    </div>
+    {% for variableresults_rec in variableresults_list %}
+        {% ifchanged variableresults_rec.result_date %}
+            <div><span class="badge rounded-pill bg-success mb-2">{{ variableresults_rec.result_date }}</span></div>
+        {% endifchanged %}
+        <div class="row border-bottom border-dark">
+            <div class="col">{{ variableresults_rec.variable }}</div>
+            <div class="col">{{ variableresults_rec.variable.get_variable_type_display }}</div>
+            <div class="col">
+                {% if variableresults_rec.variable.variable_type  == "BN" %}
+                    {{ variableresults_rec.result_value|yesno:"Yes,No,maybe" }}
+                {% else %}
+                    <div class="col">{{ variableresults_rec.result_value }}</div>
+            {% endif %}
+            </div>
+
+        </div>
+    {% empty %}
+        <h3>No results </h3>
+    {% endfor %}
+
+
+
+{% endblock %}

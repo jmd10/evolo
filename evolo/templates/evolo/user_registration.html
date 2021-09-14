@@ -1,0 +1,13 @@
+{% extends "evolo/base.html" %}
+{% block title %}{{ block.super }}- User Registration{% endblock %}
+{% block content %}
+    <h3 class="text-center text-success mt-5">New User Registration</h3>
+    {{ form.errors }}
+    <div class="row col-sm-5">
+    <form method="post">
+        {% csrf_token %}
+        {{ form.as_p }}
+            <button type="submit" class="btn btn-primary">Create User</button>
+    </form>
+    </div>
+{% endblock %}

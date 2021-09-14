@@ -1,0 +1,28 @@
+{% extends "evolo/base.html" %}
+{% block title %}{{ block.super }}- Add Results{% endblock %}
+{% block content %}
+    {% if formset.errors %}
+        {% for error in formset.errors %}
+            <div class="bg-danger text-white">{{ error }}</div>
+        {% endfor %}
+
+    {% endif %}
+    <form method="post">
+        {% csrf_token %}
+        {{ formset.management_form }}
+        {% for form in formset %}
+            {{ form.id }}
+            <div class="row mb-2">
+            <div class="col">{{ form.instance.variable.variable_name }}</div>
+            <div class="col">{{ form.instance.variable.get_variable_type_display }}</div>
+            <div class="col-3">{{ form.result_numeric }}{{ form.result_binary }}{{ form.result_categorical }}
+                {{ form.result_scale }}
+            </div>
+
+            </div>
+
+        {% endfor %}
+    <button type="submit" class="btn btn-primary">Submit</button>
+{#    <input type="submit" value="Save">#}
+    </form>
+{% endblock %}
