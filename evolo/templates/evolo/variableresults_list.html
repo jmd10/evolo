@@ -2,7 +2,7 @@
 {% block title %}{{ block.super }}- Add Results{% endblock %}
 {% block content %}
 
-
+    {% comment %}
     <!-- Button trigger modal -->
     <div class="row">
         <div class="col-10"></div>
@@ -12,6 +12,7 @@
             </button>
         </div>
     </div>
+
     <!-- Modal -->
     <div class="modal fade" id="dateModal" tabindex="-1">
         <div class="modal-dialog">
@@ -35,7 +36,18 @@
 
     </div>
 
-
+{% endcomment %}
+    <form action="{% url 'evolo:add_results_view' %}" method="get">
+        {% csrf_token %}
+        <div class="row">
+            <div class="col-2">
+                <input type="date" id="tracker_date" name="results_date" required="required" value="{% now "Y-m-d" %}">
+            </div>
+            <div class="col">
+                <button type="submit" class="btn btn-primary" id="btn_save">Add Results</button>
+            </div>
+        </div>
+    </form>
 
     <div class="row mb-5">
         <div class="col"><span class="badge bg-primary">Variable Name</span></div>
@@ -54,7 +66,7 @@
                     {{ variableresults_rec.result_value|yesno:"Yes,No,maybe" }}
                 {% else %}
                     <div class="col">{{ variableresults_rec.result_value }}</div>
-            {% endif %}
+                {% endif %}
             </div>
 
         </div>
