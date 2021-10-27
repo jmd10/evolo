@@ -1,0 +1,47 @@
+{% extends "evolo/base.html" %}
+{% block title %}{{ block.super }}- Modify Results{% endblock %}
+{% block content %}
+    <h3 class="text-center text-success">Modify Results</h3>
+    {% if formset.errors %}
+        {% for error in formset.errors %}
+            <div class="bg-danger text-white">{{ error }}</div>
+        {% endfor %}
+
+
+    {% endif %}
+    <form method="post">
+        {% csrf_token %}
+
+        {{ formset.management_form }}
+        <div class="card mb-2 shadow border border-dark" style="border-radius: 10px">
+            <div class="card-body">
+                <table class="table">
+                    <thead>
+                    <tr>
+                        <th scope="col">#</th>
+                        <th scope="col">Variable</th>
+                        <th scope="col">Type</th>
+                        <th scope="col">Observation</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    {% for form in formset %}
+                        {{ form.id }}
+                        <tr>
+                            <th scope="row">{{ forloop.counter }}</th>
+                            <td>{{ form.instance.variable.variable_name }}</td>
+                            <td>{{ form.instance.variable.get_variable_type_display }}</td>
+                            <td>{{ form.result_numeric }}{{ form.result_binary }}{{ form.result_categorical }}
+                                {{ form.result_scale }}</td>
+                        </tr>
+                    {% endfor %}
+                    </tbody>
+                </table>
+
+
+            </div>
+        </div>
+        <button type="submit" class="btn btn-primary">Submit</button>
+        {#    <input type="submit" value="Save">#}
+    </form>
+{% endblock %}
