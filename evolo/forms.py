@@ -2,6 +2,7 @@ from django.forms import ModelForm
 from django import forms
 from .models import VariableMaster,VariableResults
 from django.contrib.auth.forms import UserCreationForm
+import datetime
 
 
 class VariableMasterForm(ModelForm):
@@ -29,21 +30,27 @@ class VariableResultsForm(ModelForm):
         self.fields['result_scale'].widget.attrs['placeholder'] = '1 - 10'
 
         if self.instance.variable.variable_type == VariableMaster.NUMERIC:
+
             self.fields['result_binary'].widget = forms.HiddenInput()
             self.fields['result_categorical'].widget = forms.HiddenInput()
             self.fields['result_scale'].widget = forms.HiddenInput()
         elif self.instance.variable.variable_type == VariableMaster.BINARY:
+
             self.fields['result_numeric'].widget = forms.HiddenInput()
             self.fields['result_categorical'].widget = forms.HiddenInput()
             self.fields['result_scale'].widget = forms.HiddenInput()
         elif self.instance.variable.variable_type == VariableMaster.CATEGORICAL:
+
             self.fields['result_numeric'].widget = forms.HiddenInput()
             self.fields['result_binary'].widget = forms.HiddenInput()
             self.fields['result_scale'].widget = forms.HiddenInput()
         elif self.instance.variable.variable_type == VariableMaster.SCALE:
+
             self.fields['result_numeric'].widget = forms.HiddenInput()
             self.fields['result_binary'].widget = forms.HiddenInput()
             self.fields['result_categorical'].widget = forms.HiddenInput()
+
+
 
 
 class NewUserForm(UserCreationForm):
