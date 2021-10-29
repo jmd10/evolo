@@ -31,7 +31,7 @@ class VariableMaster(models.Model):
 class VariableResults(models.Model):
     """store the results of the variables """
     variable = models.ForeignKey(VariableMaster, on_delete=models.CASCADE)
-    result_date = models.DateField()
+    result_date = models.DateField(null=True,blank=True)
     result_numeric = models.FloatField(null=True, blank=True)
     result_binary = models.BooleanField(default=False, blank=True)
     result_categorical = models.CharField(max_length=200, null=True, blank=True)

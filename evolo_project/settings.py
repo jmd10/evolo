@@ -14,6 +14,7 @@ from pathlib import Path
 from dotenv import load_dotenv
 import django_heroku
 import os
+from django.urls import reverse_lazy
 
 load_dotenv()
 
@@ -143,3 +144,6 @@ STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 
 # Activate Django-Heroku.
 django_heroku.settings(locals())
+
+LOGIN_REDIRECT_URL = reverse_lazy('evolo:home_view')
+LOGOUT_REDIRECT_URL = '/'

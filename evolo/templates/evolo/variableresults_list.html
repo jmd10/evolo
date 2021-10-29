@@ -1,40 +1,6 @@
 {% extends "evolo/base.html" %}
-{% block title %}{{ block.super }}- Add Results{% endblock %}
+{% block title %}{{ block.super }}- Results List{% endblock %}
 {% block content %}
-
-
-    <!-- Button trigger modal -->
-    <div class="row">
-        <div class="col-10"></div>
-        <div class="col">
-            <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#dateModal">
-                Add / Modify Results
-            </button>
-        </div>
-    </div>
-    <!-- Modal -->
-    <div class="modal fade" id="dateModal" tabindex="-1">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="dateModalTitle">Select Date</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                <form action="{% url 'evolo:add_results_view' %}" method="get">
-                    {% csrf_token %}
-                    <div class="modal-body">
-                        <input type="date" id="tracker_date" name="results_date" required="required">
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                        <button type="submit" class="btn btn-primary" id="btn_save">Add Results</button>
-                    </div>
-                </form>
-            </div>
-        </div>
-
-    </div>
-
 
 
     <div class="row mb-5">
@@ -44,7 +10,21 @@
     </div>
     {% for variableresults_rec in variableresults_list %}
         {% ifchanged variableresults_rec.result_date %}
-            <div><span class="badge rounded-pill bg-success mb-2">{{ variableresults_rec.result_date }}</span></div>
+            <div class="row mt-2">
+                <div class="col-10">
+                    <span class="badge rounded-pill bg-success mb-2">{{ variableresults_rec.result_date }}</span>
+                </div>
+                <div class="col">
+                    <a class="btn btn-success btn-sm"
+                       href="{% url 'evolo:modify_view' variableresults_rec.result_date %}"
+                       role="button">Modify</a>
+                </div>
+                <div class="col">
+                    <a class="btn btn-danger btn-sm"
+                       href="{% url 'evolo:delete_view' variableresults_rec.result_date %}"
+                       role="button">Delete</a>
+                </div>
+            </div>
         {% endifchanged %}
         <div class="row border-bottom border-dark">
             <div class="col">{{ variableresults_rec.variable }}</div>
@@ -54,7 +34,7 @@
                     {{ variableresults_rec.result_value|yesno:"Yes,No,maybe" }}
                 {% else %}
                     <div class="col">{{ variableresults_rec.result_value }}</div>
-            {% endif %}
+                {% endif %}
             </div>
 
         </div>

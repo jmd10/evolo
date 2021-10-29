@@ -1,7 +1,7 @@
 {% extends "evolo/base.html" %}
-{% block title %}{{ block.super }}- Add Results{% endblock %}
+{% block title %}{{ block.super }}- Modify Results{% endblock %}
 {% block content %}
-    <h3 class="text-center text-success">Add Daily Results</h3>
+    <h3 class="text-center text-success">Modify Results</h3>
     {% if formset.errors %}
         {% for error in formset.errors %}
             <div class="bg-danger text-white">{{ error }}</div>
@@ -11,16 +11,7 @@
     {% endif %}
     <form method="post">
         {% csrf_token %}
-        <div class="row mb-2">
-            <div class="col-2">
-                <h4>Select Date</h4>
-            </div>
-            <div class="col-2">
-                <input type="date" id="tracker_date" name="results_date" required="required" value="{% now "Y-m-d" %}"
-                       class="form-control">
-            </div>
 
-        </div>
         {{ formset.management_form }}
         <div class="card mb-2 shadow border border-dark" style="border-radius: 10px">
             <div class="card-body">
@@ -36,7 +27,6 @@
                     <tbody>
                     {% for form in formset %}
                         {{ form.id }}
-
                         <tr>
                             <th scope="row">{{ forloop.counter }}</th>
                             <td>{{ form.instance.variable.variable_name }}</td>
