@@ -16,6 +16,8 @@ import django_heroku
 import os
 from django.urls import reverse_lazy
 import dj_database_url
+from whitenoise import WhiteNoise
+
 
 
 
@@ -32,7 +34,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = os.environ['DJANGO_SECRET_KEY']
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False 
+DEBUG = False
 
 ALLOWED_HOSTS = ['localhost', 'evolo.herokuapp.com']
 
