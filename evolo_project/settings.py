@@ -15,6 +15,9 @@ from dotenv import load_dotenv
 import django_heroku
 import os
 from django.urls import reverse_lazy
+import dj_database_url
+
+
 
 load_dotenv()
 
@@ -29,7 +32,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = os.environ['DJANGO_SECRET_KEY']
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = FALSE
 
 ALLOWED_HOSTS = ['localhost', 'evolo.herokuapp.com']
 
@@ -46,7 +49,7 @@ INSTALLED_APPS = [
     # My Apps
     'evolo.apps.EvoloConfig',
     # external apps (hashed out because it was not allowing me to run local server)
-    # 'whitenoise.runserver_nostalgic',
+    'whitenoise.runserver_nostalgic',
 ]
 
 MIDDLEWARE = [
