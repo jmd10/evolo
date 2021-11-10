@@ -51,7 +51,7 @@ INSTALLED_APPS = [
     # My Apps
     'evolo.apps.EvoloConfig',
     # external apps (hashed out because it was not allowing me to run local server)
-    'whitenoise.runserver_nostalgic',
+    # 'whitenoise.runserver_nostalgic',
 ]
 
 MIDDLEWARE = [
