@@ -50,6 +50,7 @@ def add_results(request):
     """function to add results for a specific date"""
 
     if request.method == 'GET':
+        print("file for the new branch")
         record_status = VariableResults.objects.filter(variable__person=request.user,
                                                        result_date=None).exists()
         if not record_status:  # create records in results table with None values
