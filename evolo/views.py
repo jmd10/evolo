@@ -50,13 +50,27 @@ def add_results(request):
     """function to add results for a specific date"""
 
     if request.method == 'GET':
-        print("file for the new branch")
-        record_status = VariableResults.objects.filter(variable__person=request.user,
-                                                       result_date=None).exists()
-        if not record_status:  # create records in results table with None values
-            variable_obj_list = VariableMaster.objects.filter(person=request.user)
+
+        # record_status = VariableResults.objects.filter(variable__person=request.user,
+        #                                                result_date=None).exists()
+        # if not record_status:  # create records in results table with None values
+        #     variable_obj_list = VariableMaster.objects.filter(person=request.user)
+        #     rec_list = [VariableResults(variable=track_var) for track_var in variable_obj_list]
+        #     VariableResults.objects.bulk_create(rec_list)
+
+        record_count = VariableResults.objects.filter(variable__person=request.user,
+                                                       result_date=None).count()
+        variable_obj_list = VariableMaster.objects.filter(person=request.user)
+        if record_count !=0:
+            if variable_obj_list.count() != record_count:  # a new variable has been created by the user
+                VariableResults.objects.filter(variable__person=request.user,
+                                               result_date=None).delete()
+                record_count = 0
+
+        if record_count == 0:  # create records in results table with None values
             rec_list = [VariableResults(variable=track_var) for track_var in variable_obj_list]
             VariableResults.objects.bulk_create(rec_list)
+
 
     VariableFormset = modelformset_factory(VariableResults, form=VariableResultsForm, extra=0)
 
